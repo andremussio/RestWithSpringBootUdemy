@@ -7,15 +7,15 @@ public class SimpleMath {
 	}
 
 	public static Double subtraction (Double number1, Double number2) {
-		return number1 + number2;
+		return number1 - number2;
 	}
 
 	public static Double multiplication (Double number1, Double number2) {
-		return number1 + number2;
+		return number1 * number2;
 	}
 
 	public static Double division (Double number1, Double number2) {
-		return number1 + number2;
+		return number1 / number2;
 	}
 
 	public static Double average (Double number1, Double number2) {
