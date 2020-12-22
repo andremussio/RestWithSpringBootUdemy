@@ -48,7 +48,8 @@ public class PersonServices {
 		entity.setGender(person.getGender());
 		entity.setPayDay(person.getPayDay());
 
-		return repository.save(entity);
+		PersonVO vo = DozerConverter.parseObject(repository.save(entity), PersonVO.class);
+		return vo;
 	}
 
 	public void delete(Long id) {
@@ -84,11 +85,14 @@ public class PersonServices {
 		/*
 		 * Forma 3 de tratamento e retorno: Com Lambda
 		 */
-		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+		Person entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+		PersonVO vo = DozerConverter.parseObject(entity, PersonVO.class);
+		return vo;
 	}
 
 	public List<PersonVO> findAll() {
-		return repository.findAll();
+		List<PersonVO> listVO = DozerConverter.parseListObjects(repository.findAll(), PersonVO.class);
+		return listVO;
 	}
 
 }
