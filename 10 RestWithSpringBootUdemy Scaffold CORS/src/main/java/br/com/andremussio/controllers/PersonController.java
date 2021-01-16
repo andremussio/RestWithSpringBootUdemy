@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,16 @@ import br.com.andremussio.data.vo.v1.PersonVO;
 import br.com.andremussio.services.PersonServices;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+/*
+ * CORS - Cross Origin Resource Sharing
+ * É um recurso que permite compartilhar o uso de APIs para outras origens (domínios web).
+ * É possível configurar de 3 formas:
+ * - @CrossOrigin globalmente em cada controller;
+ * - @CrossOrigin localmente em cada método;
+ * - Configuração centralizada na aplicação.
+ */
 
+//@CrossOrigin(origins = {"http://localhost:8080", "www.erudio.com.br"}) //Configuração CORS global no controller todo
 @Api(value = "Person endpoint", description = "Persons management", tags = {"endpoint /person"})
 @RestController
 @RequestMapping(value = "/api/person/v1")
@@ -40,6 +50,7 @@ public class PersonController {
 	// atributo "produces" passa a ser obrigatório!
 	@ApiOperation(value = "Lista todas as pessoas cadastradas")
 	@GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
+//	@CrossOrigin(origins = "http://localhost:8080") //Configuração CORS local no método
 	public List<PersonVO> findAll() {
 		List<PersonVO> persons = personServices.findAll();		
 		//Adiciona links de auto-relacionamento para cada elemento da lista
@@ -56,6 +67,7 @@ public class PersonController {
 	// MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Lista uma pessoa específica informada por {id}")
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
+//	@CrossOrigin(origins = {"http://localhost:8080", "www.erudio.com.br"}) //Configuração CORS local no método
 	public PersonVO findById(@PathVariable(value = "id") Long id) {
 		PersonVO personVO = personServices.findById(id);
 		// Adiciona um link de auto-relacionamento
