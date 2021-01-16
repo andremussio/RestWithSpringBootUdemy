@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.andremussio.data.vo.v1.PersonVO;
 import br.com.andremussio.services.PersonServices;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value = "Person endpoint", description = "Persons management", tags = {"endpoint /person"})
 @RestController
 @RequestMapping(value = "/api/person/v1")
 public class PersonController {
@@ -35,6 +38,7 @@ public class PersonController {
 	// MediaType.APPLICATION_JSON_VALUE)
 	// Ao configurar a aplicação para usar mais de um tipo de serialização, o
 	// atributo "produces" passa a ser obrigatório!
+	@ApiOperation(value = "Lista todas as pessoas cadastradas")
 	@GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
 	public List<PersonVO> findAll() {
 		List<PersonVO> persons = personServices.findAll();		
@@ -50,6 +54,7 @@ public class PersonController {
 
 	// @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces =
 	// MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "Lista uma pessoa específica informada por {id}")
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public PersonVO findById(@PathVariable(value = "id") Long id) {
 		PersonVO personVO = personServices.findById(id);
@@ -66,6 +71,7 @@ public class PersonController {
 	// MediaType.APPLICATION_JSON_VALUE, produces =
 	// MediaType.APPLICATION_JSON_VALUE)
 	// Método POST produz e consome JSON e XML
+	@ApiOperation(value = "Cadastra uma nova pessoa")
 	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
 			"application/json", "application/xml", "application/x-yaml" })
 	public PersonVO create(@RequestBody PersonVO person) {
@@ -82,6 +88,7 @@ public class PersonController {
 	// MediaType.APPLICATION_JSON_VALUE, produces =
 	// MediaType.APPLICATION_JSON_VALUE)
 	// Método PUT produz e consome JSON e XML
+	@ApiOperation(value = "Altera dados de uma pessoa já cadastrada e especificada por {id}")
 	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
 			"application/json", "application/xml", "application/x-yaml" })
 	public PersonVO update(@RequestBody PersonVO person) {
@@ -95,6 +102,7 @@ public class PersonController {
 	 * @DeleteMapping é uma abreviação para @RequestMapping do verbo DELETE.
 	 */
 	// @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@ApiOperation(value = "Remove uma pessoa já cadastrada e especificada por {id}")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
 		personServices.delete(id);
