@@ -42,3 +42,9 @@ FLUXO DE REQUISIÇÕES
 |                                                 | 6. Envia resposta da requisição ao cliente|                               |
 | 7. FIM!                                         | <-----------------------------------------|                               |                
 \-----------------------------------------------------------------------------------------------------------------------------/
+
+ESTRUTURA DO TOKEN JWT
+======================
+      Cabeçalho                                                        Corpo                                                                     Assinatura                                               
+|------------------| |--------------------------------------------------------------------------------------------------------| |-----------------------------------------|
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsZWFuZHJvIiwicm9sZXMiOlsiQURNSU4iLCJNQU5BR0VSIl0sImlhdCI6MTYxMTU5MzkzNCwiZXhwIjoxNjExNTk3NTM0fQ.poI7y-D5N0zL9tSmi56Sfqz0gGtpLttcFcAOF8aB_x8

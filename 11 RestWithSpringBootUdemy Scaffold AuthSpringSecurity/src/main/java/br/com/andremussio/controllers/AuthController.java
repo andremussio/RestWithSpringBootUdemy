@@ -40,7 +40,7 @@ public class AuthController {
 	public ResponseEntity signin(@RequestBody AccountCredentialsVO data) {
 		try {
 			// Pega usuário e senha fornecidos no login
-			var username = data.getUserName();
+			var username = data.getUsername();
 			var password = data.getPassword();
 			
 			// Executa método de autenticação para validar usuário e senha fornecidos.
