@@ -1,0 +1,50 @@
+Resumo de instruções para implementação de autenticação JWT e autorização com Spring Security
+=============================================================================================
+1. Banco de dados precisa ter as seguintes tabelas:
+   - users: tabela de usuários contendo username (unique) e password criptografada, dentre outras informações exigidas pelo Spring Security;
+   - permissions: tabela de permissões (roles) existentes na aplicação;
+   - user_permission: tabela N-M de permissões por usuário.
+
+2. Adicionar dependências do Spring Security (segurança) e JWT (geração do token de segurança);
+
+3. Mapear entidades de segurança no Spring Boot (tabelas);
+
+4. Criar repositórios para acesso às tabelas de segurança do banco de dados;
+
+5. Implementar os serviço de acesso ao usuário. Esta classe deve implementar a interface UserDetailsService;
+
+6. Criar VO para tráfego das credenciais de acesso do usuário (AccountCredentialsVO);
+
+7. Criar exceção de autenticação (InvalidJwtAuthenticationException) e seu handler (CustomizedResponseEntityExceptionHandler);
+
+8. Criar o JWT Token Provider (JwtTokenProvider);
+
+9. Criar o JWT Token Filter (JwtTokenFilter);
+
+10. Criar o JWT Configurer (JwtConfigurer);
+
+11. Criar a classe de configuração de segurança (SecurityConfig);
+
+12. Criar o controller de autenticação (AuthController).
+
+
+
+FLUXO DE REQUISIÇÕES
+====================
+/-----------------------------------------------------------------------------------------------------------------------------\
+| BROWSER                                         | SERVER                                                                    |
+|-------------------------------------------------|---------------------------------------------------------------------------|
+| 1. POST users/login com username e password --> | 2. Cria um Token JWT com um segredo (secretKey)                           |
+|                                                 | 3. Retorna o Token para o browser|                                        |
+|                                                 | <--------------------------------|                                        |
+| 4. Envia o Token JWT no parâmetro Authorization |                                                                           |
+|    do Header a cada requisição HTTP ----------> | 5. Verifica assinatura e validade do Token JWT e pega o username do Token |
+|                                                 | 6. Envia resposta da requisição ao cliente|                               |
+| 7. FIM!                                         | <-----------------------------------------|                               |                
+\-----------------------------------------------------------------------------------------------------------------------------/
+
+ESTRUTURA DO TOKEN JWT
+======================
+      Cabeçalho                                                        Corpo                                                                     Assinatura                                               
+|------------------| |--------------------------------------------------------------------------------------------------------| |-----------------------------------------|
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsZWFuZHJvIiwicm9sZXMiOlsiQURNSU4iLCJNQU5BR0VSIl0sImlhdCI6MTYxMTU5MzkzNCwiZXhwIjoxNjExNTk3NTM0fQ.poI7y-D5N0zL9tSmi56Sfqz0gGtpLttcFcAOF8aB_x8
