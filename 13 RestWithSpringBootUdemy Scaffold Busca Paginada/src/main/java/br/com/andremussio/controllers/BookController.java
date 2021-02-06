@@ -35,13 +35,15 @@ public class BookController {
 	@Autowired
 	private BookServices bookServices;
 
+	@Autowired
+	PagedResourcesAssembler<BookVO> assembler;
+	
 	@ApiOperation(value = "Lista todos os livros cadastrados")
 	@GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
-	public ResponseEntity<PagedResources<BookVO>> findAll(
+	public ResponseEntity<?> findAll(
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "limit", defaultValue = "12") int limit,
-			@RequestParam(value = "direction", defaultValue = "asc") String direction,
-			PagedResourcesAssembler assembler) {
+			@RequestParam(value = "direction", defaultValue = "asc") String direction) {
 		// Define sortDirection desconsiderando case sensitive.
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
 				
@@ -56,7 +58,10 @@ public class BookController {
 					linkTo(methodOn(BookController.class).findById(p.getKey())).withSelfRel()
 				)
 			);
-		return new ResponseEntity<>(assembler.toResource(books), HttpStatus.OK);
+		
+		PagedResources<?> resource = assembler.toResource(books);
+
+		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Lista um livro específico informado por {id}")

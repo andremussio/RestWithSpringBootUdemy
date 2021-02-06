@@ -130,4 +130,10 @@ public class PersonServices {
 		return vo;
 	}
 
+	public Page<PersonVO> findPersonByName(String firstName, Pageable pageable) {
+		var page = repository.findPersonByName(firstName, pageable);
+		
+		return page.map(this::convertToPersonVO);
+	}
+
 }

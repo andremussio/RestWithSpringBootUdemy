@@ -45,6 +45,9 @@ public class PersonController {
 	@Autowired
 	private PersonServices personServices;
 
+	@Autowired
+	private PagedResourcesAssembler<PersonVO> assembler;
+	
 	/*
 	 * Method GET é default, não precisa ser informado.
 	 * MediaType.APPLICATION.JSON_VALUE é default, não precisa ser informado.
@@ -58,11 +61,10 @@ public class PersonController {
 	@ApiOperation(value = "Lista todas as pessoas cadastradas")
 	@GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
 //	@CrossOrigin(origins = "http://localhost:8080") //Configuração CORS local no método
-	public ResponseEntity<PagedResources<PersonVO>> findAll(
+	public ResponseEntity<?> findAll(
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "limit", defaultValue = "12") int limit,
-			@RequestParam(value = "direction", defaultValue = "asc") String direction,
-			PagedResourcesAssembler assembler) {
+			@RequestParam(value = "direction", defaultValue = "asc") String direction) {
 		
 		// Define sortDirection desconsiderando case sensitive.
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
@@ -77,7 +79,10 @@ public class PersonController {
 					linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()
 				)
 			);
-		return new ResponseEntity<>(assembler.toResource(persons), HttpStatus.OK);
+		
+		PagedResources<?> resource = assembler.toResource(persons);
+		
+		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 
 	// @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces =
@@ -146,6 +151,34 @@ public class PersonController {
 		// Adiciona um link de auto-relacionamento
 		personVO.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
 		return personVO;
+	}
+
+	@ApiOperation(value = "Lista todas as pessoas que contenham um trecho informado no nome")
+	@GetMapping(value = "/findPersonByName/{firstName}", produces = {"application/json", "application/xml", "application/x-yaml"})
+//	@CrossOrigin(origins = "http://localhost:8080") //Configuração CORS local no método
+	public ResponseEntity<?> findPersonByName(
+			@PathVariable("firstName") String firstName,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "limit", defaultValue = "12") int limit,
+			@RequestParam(value = "direction", defaultValue = "asc") String direction) {
+		
+		// Define sortDirection desconsiderando case sensitive.
+		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+		
+		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
+		
+		Page<PersonVO> persons = personServices.findPersonByName(firstName, pageable);		
+		//Adiciona links de auto-relacionamento para cada elemento da lista
+		persons
+			.stream()
+			.forEach(p -> p.add(
+					linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()
+				)
+			);
+		
+		PagedResources<?> resource = assembler.toResource(persons);
+
+		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 
 }
