@@ -1,0 +1,5 @@
+INSERT INTO `person` (`id`,`address`,`first_name`,`gender`,`last_name`,`pay_day`) VALUES (1,'Uberlândia - Minas Gerais - Brasil','Leandro','Male','Costa',0);
+INSERT INTO `person` (`id`,`address`,`first_name`,`gender`,`last_name`,`pay_day`) VALUES (2,'Uberlândia - Minas Gerais - Brasil','Gabriela','Female','Costa',0);
+INSERT INTO `person` (`id`,`address`,`first_name`,`gender`,`last_name`,`pay_day`) VALUES (5,'Patos de Minas - Minas Gerais - Brasil','Flávio','Male','Costa',0);
+INSERT INTO `person` (`id`,`address`,`first_name`,`gender`,`last_name`,`pay_day`) VALUES (7,'Uberlândia - Minas Gerais - Brasil','Fernanda','Female','Cardoso da Silva',0);
+INSERT INTO `person` (`id`,`address`,`first_name`,`gender`,`last_name`,`pay_day`) VALUES (8,'Patos de Minas - Minas Gerais - Brasil','Pedro','Male','Paulo',0);

@@ -1,0 +1,13 @@
+1. Criar e configurar arquivo "Dockerfile" da pasta da aplicação (API), baseado numa imagem Maven;
+2. Criar e configurar arquivo "Dockerfile" da raiz do projeto, baseado numa imagem Mysql;
+3. Criar e configurar arquivo "docker-compose.yml" para configurar o build das 2 imagens (API e Mysql);
+4. Comando "sudo docker-compose build", para construir as imagens;
+5. Comando "sudo docker-compose up", para inicializar as imagens;
+6. Ajustar configurações de acesso ao DB em application.properties da aplicação (API).
+7. Comando "sudo docker-compose up -d --build" constrói e já inicia o container, unificando os comandos "sudo docker-compose build" e "sudo docker-compose up". A opção "-d" faz com que o console do terminal seja "detachado", permitindo que se use o console após o start do container.
+8. Subindo imagens pro Docker Hub:
+  - "sudo docker login docker.io" e informe as credenciais do usuário docker hub;
+  - "sudo docker push <imageName>".
+  
+Configurando integração contínua com TravisCI:
+9. Criar arquivo de configuração ".travis.yml" na raiz do projeto e incluir as configurações de build.
