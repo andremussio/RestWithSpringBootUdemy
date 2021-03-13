@@ -1,0 +1,12 @@
+ANOTAÇÕES IMPORTANTES
+=====================
+- A grande vantagem do Flyway em relação ao auto update do Hibernate é que o Flyway versiona as alterações, de acordo com os scripts que vão sendo aplicados.
+
+DOCUMENTAÇÕES IMPORTANTES
+=========================
+1. Artigo importante sobre DB Migrations:
+   https://martinfowler.com/articles/evodb.html
+   
+2. Documentação Flyway
+   https://flywaydb.org/documentation/migrations
+   

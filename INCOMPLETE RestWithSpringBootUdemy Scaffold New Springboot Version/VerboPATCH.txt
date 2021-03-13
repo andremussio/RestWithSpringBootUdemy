@@ -1,0 +1,9 @@
+Resumo de instruções para uso dos verbos PATCH e PUT
+====================================================
+1. Ambos os verbos são usados para operações de atualização de dados (UPDATEs);
+
+2. Verbo PATCH deve ser usado quando se deseja que a operação minimize o tráfego de rede;
+
+3. Verbo PATCH é usado normalmente em operações de UPDATE parcial, por exemplo, UPDATE de apenas um campo;
+
+4. Verbo PATCH é mais suscetível a problemas de conflito em caso de duas requisições simultâneas;
