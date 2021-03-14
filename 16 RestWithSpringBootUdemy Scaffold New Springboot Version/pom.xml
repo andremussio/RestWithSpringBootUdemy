@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.1</version>
+		<version>2.4.3</version>
 	</parent>
 
 	<groupId>br.com.andremussio</groupId>
@@ -112,6 +112,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- Foi necessário fazer override da versão de maven-resources-plugin
+			     A versão padrão 3.2.0, usada pelo SpringBoot 2.4.3 apresentava problemas MalformedInputException no POM do projeto.
+			     Trocando a versão para 3.1.0, resolveu o problema.
+			     
+			     Veja: github.com/spring-projects/spring-boot/issues/24346
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
 			</plugin>
 			<plugin>
 				<groupId>org.flywaydb</groupId>

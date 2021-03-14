@@ -20,7 +20,7 @@ import br.com.andremussio.config.FileStorageConfig;
 @EnableConfigurationProperties({
 	FileStorageConfig.class
 })
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+@EnableAutoConfiguration
 @ComponentScan
 public class Startup {
 	
