@@ -7,3 +7,9 @@ Criação do projeto ReactJS:
    Dentro do próprio VSCode, abrir um terminal.
    Digitar "npm start"
 5. ReactJS utiliza websockets. Assim, ao salvar uma alteração no projeto, a aplicação é automaticamente recarregada e já reflete a alteração.
+6. Para ativar o roteamento no ReactJS, é necessário instalar o react-router-dom:
+   npm install react-router-dom
+7. Instalar pacote de ícones
+   npm install react-icons
+8. Para utilizar chamadas de APIs, instalar o pacote AXIOS
+   npm install axios
