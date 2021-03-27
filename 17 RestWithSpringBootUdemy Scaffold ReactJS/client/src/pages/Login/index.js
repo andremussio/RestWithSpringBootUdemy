@@ -19,7 +19,7 @@ function Login() {
 
         const data = {
             username,
-            password,
+            password
         };
 
         try {

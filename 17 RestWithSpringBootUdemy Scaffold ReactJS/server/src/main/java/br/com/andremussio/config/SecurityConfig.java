@@ -50,6 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/**").authenticated() // Permite requisição desses endpoints desde que o usuário esteja autenticado
 				.antMatchers("/users").denyAll() // Bloqueia requisição desse endpoint
 			.and()
+			.cors() //Necessário para permitir a execução do React Preflight Request, que o React executa antes de cada request para verificar se o request tem permissão na API. Além dessa configuração, também é necessária a configuração CORS existente em WebConfig.java
+			.and()
 			.apply(new JwtConfigurer(tokenProvider)); // Aplica classe de configuração JWT
 	}
 }
