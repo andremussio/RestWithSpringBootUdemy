@@ -8,35 +8,49 @@ import logoImage from '../../assets/logo.svg';
 
 function Books() {
     const [books, setBooks] = useState([]);
+    const [page, setPage] = useState(0);
+    const [moreBooks, setMoreBooks] = useState(true);
 
     const username = localStorage.getItem('username');
-    const accessToken = localStorage.getItem('accessToken');
 
     const history = useHistory();
 
-    const headerGet = {
-        headers: {
-            Authorization: `Bearer ${accessToken}`
-        },
-        params: {
-            page: 0,
-            limit: 4,
-            direction: 'asc'
-        }
-    };
 
     const headerDelete = {
         headers: {
-            Authorization: `Bearer ${accessToken}`
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
     };
 
-    //useEffect é usado para fazer com que os dados sejam carregados na abertura da tela e não após uma ação do usuário.
+    async function fetchMoreBooks() {
+        const headerGet = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            params: {
+                page: page,
+                limit: 4,
+                direction: 'asc'
+            }
+        };
+
+        const response = await api.get('api/book/v1', headerGet);
+        //setBooks ([array1], [array2]) => Adiciona [array2] em [array1].
+        //O spread operador ... indica uma "cópia" de um array já existente.
+        if (response.data._embedded !== undefined) {
+            setBooks([...books, ...response.data._embedded.bookVoes]); 
+            setPage(page + 1);    
+        } else {
+            setMoreBooks(false);
+        }
+    }
+
+    //useEffect é usado para disparar "efeitos" a partir de algum evento.
+    //Neste caso, como o segundo parâmetro é um array vazio ([]), significa que o efeito será executado uma única vez no carregamento da página.
+    //Se fosse passado um array preenchido, o efeito seria disparado quando algum dos states do array fosse modificado.
     useEffect(() => {
-        api.get('api/book/v1', headerGet).then(response => {
-            setBooks(response.data._embedded.bookVoes);
-        });
-    });
+        fetchMoreBooks();
+    }, []);
 
     //Método para logout
     async function logout() {
@@ -105,6 +119,13 @@ function Books() {
                     </li>
                 ))}
             </ul>
+            <button 
+                className="button" 
+                type="button" 
+                onClick={fetchMoreBooks}
+                disabled={!moreBooks}>
+                {moreBooks ? 'Carregar mais livros...' : 'Não há mais livros para exibição...'}
+            </button>
         </div>
     );
 }
