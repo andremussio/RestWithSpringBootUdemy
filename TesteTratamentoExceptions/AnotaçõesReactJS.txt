@@ -1,0 +1,15 @@
+Criação do projeto ReactJS:
+1. Na pasta raiz, criar pasta "server" e mover para dentro dela a pasta "src" e o arquivo "pom.xml" do projeto da API;
+2. Remover os demais arquivos ".classpath", ".project", etc.;
+3. Na pasta raiz, criar o ReactJS Client:
+   npx create-react-app client  ==> "client" é o nome do app, não é palavra reservada!
+4. Para iniciar a aplicação:
+   Dentro do próprio VSCode, abrir um terminal.
+   Digitar "npm start"
+5. ReactJS utiliza websockets. Assim, ao salvar uma alteração no projeto, a aplicação é automaticamente recarregada e já reflete a alteração.
+6. Para ativar o roteamento no ReactJS, é necessário instalar o react-router-dom:
+   npm install react-router-dom
+7. Instalar pacote de ícones
+   npm install react-icons
+8. Para utilizar chamadas de APIs, instalar o pacote AXIOS
+   npm install axios
